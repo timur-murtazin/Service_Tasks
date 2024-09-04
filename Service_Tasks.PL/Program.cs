@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<TasksService>();
 
+
 //string connectionString = builder.Configuration.GetConnectionString("DefaulConnection");
 
 //builder.Services.AddDbContext<DBContext>(options => options.UseNpgsql(connectionString));

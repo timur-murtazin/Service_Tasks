@@ -15,12 +15,12 @@ namespace Service_Tasks.BLL.Services
     {
         //public object TestTask { get; set; }
 
-        private readonly DbContext _dbContext;
+        /*private readonly DbContext _dbContext;
 
         public TasksService (DbContext dbContext)
         {
             _dbContext = dbContext;
-        }
+        }*/
 
         public List<TaskDTO> GetAllTaskDTOs ()
         {
