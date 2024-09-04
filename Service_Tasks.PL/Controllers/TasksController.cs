@@ -17,7 +17,7 @@ namespace Service_Tasks.PL.Controllers
             _tasksService = tasksService;
         }
 
-        // GET: api/<ValuesController>
+        // GET: api/<TaskController>
         [HttpGet]
         public ActionResult<IEnumerable<TaskDTO>> Get()
         {
@@ -27,9 +27,10 @@ namespace Service_Tasks.PL.Controllers
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<IEnumerable<TaskDTO>> Get(int id)
         {
-            return "value";
+            var result = _tasksService.GetByIdTaskDTOs(id);
+            return Ok(result);
         }
 
         // POST api/<ValuesController>
@@ -42,14 +43,18 @@ namespace Service_Tasks.PL.Controllers
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult<TaskDTO> Put(int id, [FromBody] TaskDTO value)
         {
+            var result = _tasksService.RenameTaskDTO(value);
+            return Ok(result);
         }
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult<string> Delete(int id)
         {
+            var result = _tasksService.DeleteTaskDTO(id);
+            return Ok(result);
         }
     }
 }

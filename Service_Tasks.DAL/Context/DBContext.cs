@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service_Tasks.DAL.Context
 {
-    public class DBContext
+    public class DbContext
     {
         public static List<TaskEntity> Tasks = new List<TaskEntity>()
         {

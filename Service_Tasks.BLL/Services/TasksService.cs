@@ -13,16 +13,18 @@ namespace Service_Tasks.BLL.Services
 {
     public class TasksService
     {
-        private readonly DBContext _context;
+        //public object TestTask { get; set; }
 
-        public TasksService (DBContext context)
+        private readonly DbContext _dbContext;
+
+        public TasksService (DbContext dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
         }
 
         public List<TaskDTO> GetAllTaskDTOs ()
         {
-            var taskEntitiesList = DBContext.Tasks;
+            var taskEntitiesList = DbContext.Tasks;
             List<TaskDTO> taskDtosList = new List<TaskDTO> ();
             foreach (TaskEntity taskEntity in taskEntitiesList)
             {
@@ -37,6 +39,25 @@ namespace Service_Tasks.BLL.Services
             return taskDtosList;
         }
 
+        public TaskDTO GetByIdTaskDTOs(int id)
+        {
+            var finded = DbContext.Tasks.Find(el => el.Id.Equals(id));
+            if (finded is null)
+            {
+                throw new Exception();
+            }
+
+            TaskDTO taskDTO = new TaskDTO()
+            {
+                Id = finded.Id,
+                Title = finded.Title,
+                Description = finded.Description,
+                Status = finded.Status,
+                CreatedDate = finded.CreatedDate,
+            };
+            return taskDTO;
+        }
+
         public TaskDTO AddNewTaskDTO (TaskDTO taskDTO)
         {
             TaskEntity taskEntity = new TaskEntity ();
@@ -46,10 +67,28 @@ namespace Service_Tasks.BLL.Services
             taskEntity.Description = taskDTO.Description;
             taskEntity.Status = taskDTO.Status;
             taskEntity.CreatedDate = taskDTO.CreatedDate;
-            DBContext.Tasks.Add (taskEntity);
+            DbContext.Tasks.Add (taskEntity);
 
             return taskDTO;
         }
 
+        public TaskDTO RenameTaskDTO (TaskDTO taskDTO)
+        {
+            var finded = DbContext.Tasks.Find(el => el.Id == taskDTO.Id);
+            finded.Title = taskDTO.Title;
+
+            return taskDTO;
+        }
+
+
+        public bool DeleteTaskDTO(int id)
+        {
+            bool result = false;
+            var finded = DbContext.Tasks.Find (el => el.Id == id);
+
+            result = DbContext.Tasks.Remove (finded);
+
+            return result;
+        }
     }
 }
