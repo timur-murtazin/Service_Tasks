@@ -10,10 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<TasksService>();
 
 
-//string connectionString = builder.Configuration.GetConnectionString("DefaulConnection");
-
 //builder.Services.AddDbContext<DBContext>(options => options.UseNpgsql(connectionString));
 
+builder.Services.AddAutoMapper(typeof(AppMappingService));
+
+string connectionString = builder.Configuration.GetConnectionString("DefaulConnection");
+builder.Services.AddDbContext<WebApiDbContext>(options => options.UseNpgsql(connectionString));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

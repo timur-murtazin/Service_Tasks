@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Service_Tasks.BLL.Models;
 using Service_Tasks.DAL.Context;
 using Service_Tasks.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 
 
@@ -21,6 +23,15 @@ namespace Service_Tasks.BLL.Services
         {
             _dbContext = dbContext;
         }*/
+
+        private readonly IMapper _mapper;
+        private readonly WebApiDbContext _context;
+
+        public TasksService(IMapper mapper, WebApiDbContext context)
+        {
+            _mapper = mapper;
+            _context = context;
+        }
 
         public List<TaskDTO> GetAllTaskDTOs ()
         {
@@ -62,11 +73,12 @@ namespace Service_Tasks.BLL.Services
         {
             TaskEntity taskEntity = new TaskEntity ();
 
-            taskEntity.Id = taskDTO.Id;
+            /*taskEntity.Id = taskDTO.Id;
             taskEntity.Title = taskDTO.Title;
             taskEntity.Description = taskDTO.Description;
             taskEntity.Status = taskDTO.Status;
-            taskEntity.CreatedDate = taskDTO.CreatedDate;
+            taskEntity.CreatedDate = taskDTO.CreatedDate;*/
+            var task = _mapper.Map<TaskDTO>(taskEntity);
             DbContext.Tasks.Add (taskEntity);
 
             return taskDTO;

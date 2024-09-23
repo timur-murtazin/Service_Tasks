@@ -4,12 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service_Tasks.DAL.Context
 {
-    public class DbContext
+    public class WebApiDbContext : DbContext
     {
-        public static List<TaskEntity> Tasks = new List<TaskEntity>()
+        public WebApiDbContext(DbContextOptions<WebApiDbContext> options) : base(options) 
+        {
+            
+        }
+
+        public DbSet<TaskEntity> Tasks { get; set; }
+
+        /*public static List<TaskEntity> Tasks = new List<TaskEntity>()
         {
             new TaskEntity()
             {
@@ -27,7 +35,7 @@ namespace Service_Tasks.DAL.Context
                 Status = "On tests",
                 CreatedDate = DateTime.Now
             }
-        };
+        };*/
 
     }
 }
